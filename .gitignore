@@ -44,7 +44,4 @@ _targets/
 docs/*html
 
 # specific data
-data_raw/dm_export_20001001_20221004_ca_huc8_perc_cat.json
-data_raw/dm_export_20001001_20221004_ca_county_perc_cat.json
-data_raw/usdm_20220927.geojson.json
-data_raw/daysabove90f_2035_2064.geojson
+data_raw/*json
