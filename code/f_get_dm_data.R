@@ -63,11 +63,11 @@ f_get_dm_data <- function(area="ClimateHubStatistics",
 
   print("Data downloaded!")
 
-  # write out and zip:
-  rio::export(dm_df, file=glue("data_raw/dm_{area}_{gsub('-','', Sys.Date())}.json"))
+  # write out general to json
+  rio::export(dm_df, file=glue("data_raw/dm_{area}_current.json"))
 
   # now zip
-  zip(zipfile = glue("data_raw/dm_{area}_{gsub('-','', Sys.Date())}.json.zip"), files = glue("data_raw/dm_{area}_{gsub('-','', Sys.Date())}.json"))
+  zip(zipfile = glue("data_raw/dm_{area}_{gsub('-','', Sys.Date())}.json.zip"), files = glue("data_raw/dm_{area}_current.json"))
 
   # print message!
   print(glue("Data saved and zipped here: data_raw/dm_{area}_{gsub('-','', Sys.Date())}"))

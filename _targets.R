@@ -9,19 +9,19 @@
 
 library(targets)
 library(tarchetypes)
-suppressPackageStartupMessages(library(tidyverse, quietly = TRUE))
-library(fs)
-library(glue)
-library(sf)
-tar_source("code/")
-options(tidyverse.quiet=TRUE)
-# Set target-specific options such as packages.
 tar_option_set(packages = "tidyverse") #, debug = "analysis_data"
+options(tidyverse.quiet=TRUE)
+#suppressPackageStartupMessages(library(tidyverse, quietly = TRUE))
+
+tar_source("code/")
+
 
 # End this file with a list of target objects.
 list(
 
-  tar_target(name = get_data, command = f_get_dm_data())
+  tar_target(download_dat, command = f_get_dm_data()),
+  tar_target(read_local, f_load_local("dm_ClimateHubStatistics_current.json")),
+  tar_target(clean_dat, f_clean_data(read_local))
 
   #tar_target(make_figs, f_make_figs(data)),
   #tar_render(name = report, path = "docs/dtsm_weekly_update.Rmd")
