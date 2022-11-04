@@ -72,5 +72,8 @@ f_get_dm_data <- function(area="ClimateHubStatistics",
   # print message!
   print(glue("Data saved and zipped here: data_raw/dm_{area}_{gsub('-','', Sys.Date())}"))
 
-  return(dm_df)
+  # make path to updated data:
+  df_path <- glue("data_raw/dm_{area}_current.json")
+
+  return(df_path)
 }
