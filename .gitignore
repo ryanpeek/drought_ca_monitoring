@@ -45,3 +45,7 @@ docs/*html
 
 # specific data
 data_raw/*json
+data_out/healthy_watershed_2013*
+
+code/hw_database*
+docs/drought_map_perc_cat*
