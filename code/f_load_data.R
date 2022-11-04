@@ -1,22 +1,22 @@
 # load data using a contentID check
 
-library(dplyr)
-library(contentid)
-library(readr)
-library(glue)
+# library(dplyr)
+# library(contentid)
+# library(readr)
+# library(glue)
 
-f_load_data <- function() {
+#f_load_data <- function() {
 
   # get raw data ID:
-  (data <- contentid::store(glue("data_raw/dm_export_20000101_perc_cat_hubs.json")))
+#  (data <- contentid::store(glue("data_raw/")))
 
-  dayflow_file <- contentid::resolve("hash://sha256/e863c22edbae00db6d0aae64c57a66169c44e2c35e91fb9dec420084dcd2c585")
+#  dayflow_file <- contentid::resolve("hash://sha256/e863c22edbae00db6d0aae64c57a66169c44e2c35e91fb9dec420084dcd2c585")
 
   # read in data
-  dayflow_dat <- read_csv(dayflow_file, show_col_types = FALSE)
+#  dayflow_dat <- read_csv(dayflow_file, show_col_types = FALSE)
 
-  print("Data loading complete.")
+#  print("Data loading complete.")
 
-  return(dayflow_dat)
+#  return(dayflow_dat)
 
-}
+#}

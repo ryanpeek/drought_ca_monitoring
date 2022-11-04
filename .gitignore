@@ -47,4 +47,4 @@ docs/*html
 data_raw/*json
 data_out/healthy_watershed_2013*
 
-code/hw_database*
+sndbox/*
