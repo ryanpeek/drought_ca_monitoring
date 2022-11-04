@@ -22,6 +22,7 @@ tar_option_set(packages = "tidyverse") #, debug = "analysis_data"
 list(
 
   tar_target(name = get_data, command = f_get_dm_data())
+
   #tar_target(make_figs, f_make_figs(data)),
   #tar_render(name = report, path = "docs/dtsm_weekly_update.Rmd")
 )
