@@ -1,13 +1,12 @@
 # clean data
 
-
-
-f_clean_data <- function(data){
+f_clean_data_hub <- function(data){
 
   require(lubridate)
   library(stringr)
   library(tidyr)
   require(dplyr)
+  library(glue)
 
   # setup params:
   hub_northwest <- c("AK", "OR", "ID", "WA")
@@ -16,7 +15,7 @@ f_clean_data <- function(data){
   hubs_order <- c("Northwest", "California", "Southwest")
 
   # percent cat data: -------------
-  dm_perc_cat <-
+  dm_perc_cat_hub <-
     data %>%
     # filter to just Northwest, CA and Southwest
     filter(Name %in% c("California", "Northwest", "Southwest")) %>%
@@ -44,5 +43,5 @@ f_clean_data <- function(data){
     mutate(max_week = max(week)) %>% ## for var
     ungroup() %>%
     filter(percentage > 0)
-  return(dm_perc_cat)
+  return(dm_perc_cat_hub)
 }

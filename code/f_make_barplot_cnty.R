@@ -1,6 +1,6 @@
 # make plot
 
-f_make_barplot <- function(data){
+f_make_barplot_cnty <- function(data){
 
   ## Color palette hubs
   #greys <- c(0, 60, 40, 60, 0, 40, 60, 0)
@@ -22,7 +22,7 @@ f_make_barplot <- function(data){
           color = after_scale(darken(fill, .2, space = "HLS"))),
       width = .9, size = 0.12
     ) +
-    facet_grid(rows = vars(year), cols = vars(hub), switch = "y") +
+    facet_grid(rows = vars(year), cols = vars(cnty), switch = "y") +
     coord_cartesian(clip = "off") +
     scale_x_continuous(expand = c(.02, .02), guide = "none", name = NULL) +
     scale_y_continuous(expand = c(0, 0), position = "right", labels = NULL, name = NULL) +
@@ -58,7 +58,7 @@ f_make_barplot <- function(data){
     )
 
   gsub("-","",Sys.Date())
-  ggsave(here::here(glue("figs/drought_bars_facet_var_{gsub('-','',Sys.Date())}.pdf")), width = 14.5, height = 11.8, device = cairo_pdf)
-  ggsave(here::here(glue("figs/drought_bars_facet_var_{gsub('-','',Sys.Date())}.png")), width = 14.5, height = 11.8)
+  ggsave(here::here(glue("figs/drought_bars_cnty_{gsub('-','',Sys.Date())}.pdf")), width = 14.5, height = 11.8, device = cairo_pdf)
+  ggsave(here::here(glue("figs/drought_bars_cnty_{gsub('-','',Sys.Date())}.png")), width = 14.5, height = 11.8)
 
 }

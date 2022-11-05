@@ -4,6 +4,10 @@
 
 # and here for API download: # https://droughtmonitor.unl.edu/DmData/DataDownload/WebServiceInfo.aspx#comp
 
+## USING AOI for HUBS:
+# aoi=c(1,7,10) (CA, Northwest, Southwest)
+# aoi
+
 library(glue)
 library(dplyr)
 library(rio)
