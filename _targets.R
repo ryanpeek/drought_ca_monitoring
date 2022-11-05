@@ -18,10 +18,10 @@ tar_source("code/")
 
 # End this file with a list of target objects.
 list(
-
-  tar_target(download_dat, command = f_get_dm_data()),
+  tar_target(download_dat, command = f_get_dm_data(aoi = c(1,7,10))),
   tar_target(read_local, f_load_local(download_dat)),
-  tar_target(clean_dat, f_clean_data(read_local))
+  tar_target(clean_dat, f_clean_data(read_local)),
+  tar_target(make_plot, f_make_barplot(clean_dat))
 
   #tar_target(make_figs, f_make_figs(data)),
   #tar_render(name = report, path = "docs/dtsm_weekly_update.Rmd")

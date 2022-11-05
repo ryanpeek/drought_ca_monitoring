@@ -15,7 +15,7 @@ library(xml2)
 
 f_get_dm_data <- function(area="ClimateHubStatistics",
                           stats_type="GetDroughtSeverityStatisticsByAreaPercent",
-                          aoi=1, statid=2, end_date=NULL){
+                          aoi=c(1,7,10), statid=2, end_date=NULL){
 
   # check parameters
   if(!area %in% c("StateStatistics", "CountyStatistics",
@@ -36,6 +36,7 @@ f_get_dm_data <- function(area="ClimateHubStatistics",
   #hubs <- purrr::map_df(hubs, unlist) %>% t() %>% as.data.frame() %>% rownames_to_column("state") %>% rename(fips=2)
   # national: "us", "conus"
   # hucs: HUC ID number (for 2, 4, 6 and 8 digit) (i.e. NFA=18020128)
+  aoi_str <- glue_collapse(aoi, ",")
 
   # START/END Dates: formatted: M/D/YYYY
   start_date <- "10/1/1999" # same time frame for all
@@ -53,7 +54,7 @@ f_get_dm_data <- function(area="ClimateHubStatistics",
   print("Downloading data...")
 
   # set path
-  dm_path <- glue("https://usdmdataservices.unl.edu/api/{area}/{stats_type}?aoi={aoi}&startdate={start_date}&enddate={end_date}&statisticsType={statid}")
+  dm_path <- glue("https://usdmdataservices.unl.edu/api/{area}/{stats_type}?aoi={aoi_str}&startdate={start_date}&enddate={end_date}&statisticsType={statid}")
 
   # Get info
   dm_get <- GET(url=dm_path)
