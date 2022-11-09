@@ -1,7 +1,7 @@
 # clean data by hub
-# tar_load(read_hub)
+# tar_load(read_hub_dsci)
 
-f_clean_data_hub <- function(data){
+f_clean_data_hub_dsci <- function(data){
 
   suppressPackageStartupMessages({
     library(lubridate);
@@ -21,25 +21,13 @@ f_clean_data_hub <- function(data){
 
   # percent cat data -----------------------------------------
 
-  dm_perc_cat_hub <-
+  dm_hub_dsci <-
     data %>%
     # filter to just Northwest, CA and Southwest
     filter(Name %in% c("California", "Northwest", "Southwest")) %>%
     mutate(
-      across(c(MapDate, ValidStart, ValidEnd), as_date),
-      across(None:D4, ~as.numeric(.x) / 100),
-      Name = stringr::str_remove(Name, "\\\\n"),
-      Name = str_replace(Name, "Nothern", "Northern")
-    ) %>%
-    rename("date" = "MapDate", "hub" = "Name") %>%
-    pivot_longer(
-      cols = c(None:D4),
-      names_to = "category",
-      values_to = "percentage"
-    ) %>%
-    filter(category != "None") %>%
-    mutate(category = factor(category)) %>%
-    dplyr::select(-ValidStart, -ValidEnd, -StatisticFormatID) %>%
+      across(c(MapDate), as_date)) %>%
+    rename("date" = "MapDate", "hub" = "Name", "dsci"="DSCI") %>%
     mutate(
       year = year(date),
       wyear = dataRetrieval::calcWaterYear(date),
@@ -50,8 +38,7 @@ f_clean_data_hub <- function(data){
     ) %>%
     group_by(wyear) %>%
     mutate(max_week = max(wyweek)) %>% ## for var
-    ungroup() %>%
-    filter(percentage > 0)
+    ungroup()
 
-  return(dm_perc_cat_hub)
+  return(dm_hub_dsci)
 }

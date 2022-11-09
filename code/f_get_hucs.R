@@ -1,11 +1,12 @@
 # get county data
-
-library(dplyr)
-library(nhdplusTools)
-library(tigris)
-library(sf)
-library(glue)
-library(readr)
+suppressPackageStartupMessages({
+  library(dplyr);
+  library(nhdplusTools);
+  library(tigris);
+  library(sf);
+  library(glue);
+  library(readr)
+})
 
 # function to download and store a list of huc8 and huc12s for CA
 f_get_hucs <- function(){

@@ -1,9 +1,11 @@
 # get county data
 
-library(dplyr)
-library(tigris)
-library(glue)
+suppressPackageStartupMessages({
+library(dplyr);
+library(tigris);
+library(glue);
 library(readr)
+})
 
 # function
 f_get_counties <- function(){

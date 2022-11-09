@@ -1,8 +1,6 @@
 # make plot
-# test with tar_load(clean_dat_hub)
-# data <- clean_dat_hub
 
-f_make_barplot_hub <- function(data, st_yr){
+f_make_barplot_hucs <- function(data, huc_out){
 
   ## Color palette hubs
   #greys <- c(0, 60, 40, 60, 0, 40, 60, 0)
@@ -13,15 +11,11 @@ f_make_barplot_hub <- function(data, st_yr){
     library(ggplot2);
     library(ggtext);
     library(systemfonts)
-    #library(agg)
   })
   fnt <- "Roboto Slab" # try Barlow or Roboto
   fnt2 <- "Roboto Condensed"
 
-  # filter data
-  data <- filter(data, wyear >= st_yr)
-
-  # plot
+  #plot
   bars <-
     ggplot(data, aes(wyweek, percentage)) +
     geom_rect(aes(
@@ -35,7 +29,7 @@ f_make_barplot_hub <- function(data, st_yr){
           color = after_scale(darken(fill, .2, space = "HLS"))),
       width = .9, linewidth = 0.12
     ) +
-    facet_grid(rows = vars(wyear), cols = vars(hub), switch = "y") +
+    facet_grid(rows = vars(wyear), cols = vars(huc), switch = "y") +
     coord_cartesian(clip = "off") +
     scale_x_continuous(expand = c(.02, .02), guide = "none", name = NULL) +
     scale_y_continuous(expand = c(0, 0), position = "right", labels = NULL, name = NULL) +
@@ -71,7 +65,7 @@ f_make_barplot_hub <- function(data, st_yr){
     )
 
   gsub("-","",Sys.Date())
-  ggsave(here::here(glue("figs/drought_bars_hub_{gsub('-','',Sys.Date())}.pdf")), width = 14.5, height = 11.8, device = cairo_pdf)
-  ggsave(here::here(glue("figs/drought_bars_hub_{gsub('-','',Sys.Date())}.png")), width = 14.5, height = 11.8, bg="white")
+  ggsave(here::here(glue("figs/drought_bars_{huc_out}_{gsub('-','',Sys.Date())}.pdf")), width = 14.5, height = 11.8, device = cairo_pdf)
+  ggsave(here::here(glue("figs/drought_bars_{huc_out}_{gsub('-','',Sys.Date())}.png")), width = 14.5, height = 11.8, bg="white")
 
 }

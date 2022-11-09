@@ -17,11 +17,3 @@ add_wyweek <- function(wyday){
   wyw <- wyday %/% 7 + 1
   return(wyw)
 }
-
-# add_wyweek <- function(date){
-#   wyw <- ifelse(month(date) > 9,
-#                 week(date) - week(make_date(year(date), 9, 30)),
-#                 week(date) + (week(make_date(year(date), 12, 31))- week(make_date(year(date), 10, 1))))
-#   wyw <- ifelse(wyw==0, 1, wyw)
-#   return(wyw)
-# }
