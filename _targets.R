@@ -24,7 +24,7 @@ list(
   # rule to download counties
   tar_target(cnty_fips, f_get_counties() %>%
                filter(county %in%
-                        c("Yolo", "Butte", "Sutter", "Colusa"))),
+                        c("Yolo", "Stanislaus", "Tulare", "Kern"))),
   tar_target(download_cnty,
              command = f_get_dm_data(
                area = "CountyStatistics",
