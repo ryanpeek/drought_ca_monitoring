@@ -2,11 +2,14 @@
 
 f_clean_data_cnty <- function(data){
 
-  require(lubridate)
-  library(stringr)
-  library(tidyr)
-  require(dplyr)
-  library(glue)
+  suppressPackageStartupMessages({
+    library(lubridate);
+    library(stringr);
+    library(tidyr);
+    library(dplyr);
+    library(glue);
+    library(dataRetrieval)
+  })
 
   # percent cat data: -------------
   dm_perc_cat_cnty <-
@@ -26,11 +29,14 @@ f_clean_data_cnty <- function(data){
     dplyr::select(-ValidStart, -ValidEnd, -StatisticFormatID) %>%
     mutate(
       year = year(date),
+      wyear = dataRetrieval::calcWaterYear(date),
+      wyday = add_wyd(date),
       week = week(date),
+      wyweek = add_wyweek(wyday),
       cnty = as.factor(cnty)
     ) %>%
     group_by(year) %>%
-    mutate(max_week = max(week)) %>% ## for var
+    mutate(max_week = max(wyweek)) %>% ## for var
     ungroup() %>%
     filter(percentage > 0)
   return(dm_perc_cat_cnty)

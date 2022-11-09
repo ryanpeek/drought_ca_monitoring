@@ -19,7 +19,7 @@ library(xml2)
 
 f_get_dm_data <- function(area="ClimateHubStatistics",
                           stats_type="GetDroughtSeverityStatisticsByAreaPercent",
-                          aoi=c(1,7,10), statid=2, end_date=NULL){
+                          aoi=c(1,7,10), statid=2, end_date=NULL, id_out="west"){
 
   # check parameters
   if(!area %in% c("StateStatistics", "CountyStatistics",
@@ -35,10 +35,13 @@ f_get_dm_data <- function(area="ClimateHubStatistics",
 
   # AOIs:
   # CA FIPS: 06, County FIPS (06 + XXX)
-  #fips <- tigris::list_counties(state = "CA")
-  #hubs <- list("California" = 1, "Caribbean" = 2, "Midwest" = 3,"Northeast" = 4,"Northern Forests" = 5,"Northern Plains" = 6,"Northwest" = 7,"Southeast"  = 8,"Southern Plains" = 9,"Southwest" = 10)
-  #hubs <- purrr::map_df(hubs, unlist) %>% t() %>% as.data.frame() %>% rownames_to_column("state") %>% rename(fips=2)
+  # fips <- tigris::list_counties(state = "CA")
+
+  # hubs <- list("California" = 1, "Caribbean" = 2, "Midwest" = 3,"Northeast" = 4,"Northern Forests" = 5,"Northern Plains" = 6,"Northwest" = 7,"Southeast"  = 8,"Southern Plains" = 9,"Southwest" = 10)
+  # hubs <- purrr::map_df(hubs, unlist) %>% t() %>% as.data.frame() %>% rownames_to_column("state") %>% rename(fips=2)
+
   # national: "us", "conus"
+
   # hucs: HUC ID number (for 2, 4, 6 and 8 digit) (i.e. NFA=18020128)
   aoi_str <- glue_collapse(aoi, ",")
 
@@ -52,7 +55,8 @@ f_get_dm_data <- function(area="ClimateHubStatistics",
   if(!statid %in% c(1, 2)){
     stop("Not a valid stat. See https://droughtmonitor.unl.edu/DmData/DataDownload/WebServiceInfo.aspx")
   }
-
+  # id_out
+  # a label for saving the file (i.e., west, ca, huc8, huc12, etc)
 
   # get data:
   print("Downloading data...")
@@ -69,16 +73,16 @@ f_get_dm_data <- function(area="ClimateHubStatistics",
   print("Data downloaded!")
 
   # write out general to json
-  rio::export(dm_df, file=glue("data_raw/dm_{area}_current.json"))
+  rio::export(dm_df, file=glue("data_raw/dm_{area}_{id_out}_current.json"))
 
   # now zip
-  zip(zipfile = glue("data_raw/dm_{area}_{gsub('-','', Sys.Date())}.json.zip"), files = glue("data_raw/dm_{area}_current.json"))
+  zip(zipfile = glue("data_raw/dm_{area}_{id_out}_{gsub('-','', Sys.Date())}.json.zip"), files = glue("data_raw/dm_{area}_{id_out}_current.json"))
 
   # print message!
-  print(glue("Data saved and zipped here: data_raw/dm_{area}_{gsub('-','', Sys.Date())}"))
+  print(glue("Data saved and zipped here: data_raw/dm_{area}_{id_out}_{gsub('-','', Sys.Date())}"))
 
   # make path to updated data:
-  df_path <- glue("data_raw/dm_{area}_current.json")
+  df_path <- glue("data_raw/dm_{area}_{id_out}_current.json")
 
   return(df_path)
 }

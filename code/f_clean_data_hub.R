@@ -1,12 +1,16 @@
 # clean data
+# tar_load(read_hub)
 
 f_clean_data_hub <- function(data){
 
-  require(lubridate)
-  library(stringr)
-  library(tidyr)
-  require(dplyr)
-  library(glue)
+  suppressPackageStartupMessages({
+    library(lubridate);
+    library(stringr);
+    library(tidyr);
+    library(dplyr);
+    library(glue);
+    library(dataRetrieval)
+  })
 
   # setup params:
   hub_northwest <- c("AK", "OR", "ID", "WA")
@@ -14,7 +18,9 @@ f_clean_data_hub <- function(data){
   hub_southwest <- c("AZ", "HI", "NM", "NV", "UT")
   hubs_order <- c("Northwest", "California", "Southwest")
 
-  # percent cat data: -------------
+
+  # percent cat data -----------------------------------------
+
   dm_perc_cat_hub <-
     data %>%
     # filter to just Northwest, CA and Southwest
@@ -36,12 +42,16 @@ f_clean_data_hub <- function(data){
     dplyr::select(-ValidStart, -ValidEnd, -StatisticFormatID) %>%
     mutate(
       year = year(date),
+      wyear = dataRetrieval::calcWaterYear(date),
+      wyday = add_wyd(date),
       week = week(date),
+      wyweek = add_wyweek(wyday),
       hub = factor(hub, levels = hubs_order, labels = hubs_order)
     ) %>%
-    group_by(year) %>%
-    mutate(max_week = max(week)) %>% ## for var
+    group_by(wyear) %>%
+    mutate(max_week = max(wyweek)) %>% ## for var
     ungroup() %>%
     filter(percentage > 0)
+
   return(dm_perc_cat_hub)
 }
