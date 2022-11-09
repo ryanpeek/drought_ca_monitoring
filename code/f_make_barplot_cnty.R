@@ -5,12 +5,19 @@ f_make_barplot_cnty <- function(data){
   ## Color palette hubs
   #greys <- c(0, 60, 40, 60, 0, 40, 60, 0)
   #pal1 <- paste0("grey", greys)
-  library(colorspace)
-  library(shades)
-  library(ggplot2)
+  suppressPackageStartupMessages({
+    library(colorspace);
+    library(shades);
+    library(ggplot2);
+    library(ggtext);
+    library(systemfonts)
+  })
+  fnt <- "Roboto Slab" # try Barlow or Roboto
+  fnt2 <- "Roboto Condensed"
 
+  #plot
   bars <-
-    ggplot(data, aes(week, percentage)) +
+    ggplot(data, aes(wyweek, percentage)) +
     geom_rect(aes(
       xmin = .5, xmax = max_week + .5,
       ymin = -0.005, ymax = 1),
@@ -22,7 +29,7 @@ f_make_barplot_cnty <- function(data){
           color = after_scale(darken(fill, .2, space = "HLS"))),
       width = .9, size = 0.12
     ) +
-    facet_grid(rows = vars(year), cols = vars(cnty), switch = "y") +
+    facet_grid(rows = vars(wyear), cols = vars(cnty), switch = "y") +
     coord_cartesian(clip = "off") +
     scale_x_continuous(expand = c(.02, .02), guide = "none", name = NULL) +
     scale_y_continuous(expand = c(0, 0), position = "right", labels = NULL, name = NULL) +
@@ -33,10 +40,10 @@ f_make_barplot_cnty <- function(data){
                  "Extreme Drought", "Exceptional Drought")
     ) +
     guides(fill = guide_legend(override.aes = list(size = 1))) +
-    theme_light(base_size = 18, base_family = "Roboto") +
+    theme_light(base_size = 18, base_family = fnt) +
     theme(
       axis.title = element_text(size = 14, color = "black"),
-      axis.text = element_text(family = "Roboto Mono", size = 11),
+      axis.text = element_text(family = fnt2, size = 11),
       axis.line.x = element_blank(),
       axis.line.y = element_line(color = "black", size = .2),
       axis.ticks.y = element_line(color = "black", size = .2),
@@ -59,6 +66,6 @@ f_make_barplot_cnty <- function(data){
 
   gsub("-","",Sys.Date())
   ggsave(here::here(glue("figs/drought_bars_cnty_{gsub('-','',Sys.Date())}.pdf")), width = 14.5, height = 11.8, device = cairo_pdf)
-  ggsave(here::here(glue("figs/drought_bars_cnty_{gsub('-','',Sys.Date())}.png")), width = 14.5, height = 11.8)
+  ggsave(here::here(glue("figs/drought_bars_cnty_{gsub('-','',Sys.Date())}.png")), width = 14.5, height = 11.8, bg="white")
 
 }

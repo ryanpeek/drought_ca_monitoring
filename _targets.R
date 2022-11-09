@@ -6,8 +6,8 @@
 # Libraries & Setup -------------------------------------------------------
 
 library(targets)
-library(tarchetypes)
-library(glue)
+#library(tarchetypes)
+
 tar_option_set(packages = "tidyverse")
 suppressPackageStartupMessages(library(tidyverse, quietly = TRUE))
 options(tidyverse.quiet=TRUE)
@@ -28,18 +28,30 @@ list(
   tar_target(download_cnty,
              command = f_get_dm_data(
                area = "CountyStatistics",
-               aoi = c(cnty_fips$ca_cnty_fips))),
+               aoi = c(cnty_fips$ca_cnty_fips),
+               id_out = "cnty")),
+
+  # get hucs and ca boundary
+  tar_target(ca_hucs,
+             f_get_hucs()),
+  # download by hucs of CA
+  tar_target(download_hucs,
+             command = f_get_dm_data(
+               area = "HUCStatistics",
+               aoi = c(ca_hucs$h8$huc8),
+               id_out = "h08")),
 
   # load the local data
   tar_target(read_hub, f_load_local(download_hub)),
   tar_target(read_cnty, f_load_local(download_cnty)),
+  tar_target(read_hucs, f_load_local(download_hucs)),
 
   # clean data
   tar_target(clean_dat_hub, f_clean_data_hub(read_hub)),
   tar_target(clean_dat_cnty, f_clean_data_cnty(read_cnty)),
 
   # make plot
-  tar_target(make_plot_hub, f_make_barplot_hub(clean_dat_hub)),
+  tar_target(make_plot_hub, f_make_barplot_hub(clean_dat_hub, 2010)),
   tar_target(make_plot_cnty, f_make_barplot_cnty(clean_dat_cnty))
 )
 

@@ -28,7 +28,7 @@ library(shades)
 library(glue)
 ```
 
-Based on work by [Cédric Scherer](https://cedricscherer.com) and [Georgios Karamanis](https://karaman.is).
+Based on work by [Cédric Scherer](https://cedricscherer.com) and [Georgios Karamanis](https://karaman.is), see code [here](https://github.com/gkaramanis/drought_viz_sciam-shared).
 
 ## Drought Monitor Info
 

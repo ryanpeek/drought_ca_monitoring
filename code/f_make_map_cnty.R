@@ -5,10 +5,17 @@ f_make_map_cnty <- function(data){
   ## Color palette hubs
   #greys <- c(0, 60, 40, 60, 0, 40, 60, 0)
   #pal1 <- paste0("grey", greys)
-  library(colorspace)
-  library(shades)
-  library(ggplot2)
+  suppressPackageStartupMessages({
+    library(colorspace);
+    library(shades);
+    library(ggplot2);
+    library(ggtext);
+    library(systemfonts)
+  })
+  fnt <- "Roboto Slab" # try Barlow or Roboto
+  fnt2 <- "Roboto Condensed"
 
+  # plot
   bars <-
     ggplot(data, aes(week, percentage)) +
     geom_rect(aes(
@@ -33,10 +40,10 @@ f_make_map_cnty <- function(data){
                  "Extreme Drought", "Exceptional Drought")
     ) +
     guides(fill = guide_legend(override.aes = list(size = 1))) +
-    theme_light(base_size = 18, base_family = "Roboto") +
+    theme_light(base_size = 18, base_family = fnt) +
     theme(
       axis.title = element_text(size = 14, color = "black"),
-      axis.text = element_text(family = "Roboto Mono", size = 11),
+      axis.text = element_text(family = fnt2, size = 11),
       axis.line.x = element_blank(),
       axis.line.y = element_line(color = "black", size = .2),
       axis.ticks.y = element_line(color = "black", size = .2),
