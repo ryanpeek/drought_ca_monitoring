@@ -18,18 +18,20 @@ f_get_hucs <- function(){
     print("loading ca boundary")
     ca <- read_rds("data_raw/ca_state_boundary.rds")})
   if(!file.exists("data_raw/ca_hucs_h8.rds")){
-    h8 <- nhdplusTools::get_huc8(AOI = ca)
-    write_rds(h8, file = "data_raw/ca_hucs_h8.rds", compress = "gz")
+    huc8 <- nhdplusTools::get_huc8(AOI = ca)
+    huc8 <- huc8 %>% rename(huc=huc8)
+    write_rds(huc8, file = "data_raw/ca_hucs_h8.rds", compress = "gz")
     print("HUC8 file saved!")
-    h12 <- nhdplusTools::get_huc12(AOI = ca)
-    write_rds(h12, file = "data_raw/ca_hucs_h12.rds", compress = "gz")
+    huc12 <- nhdplusTools::get_huc12(AOI = ca)
+    huc12 <- huc12 %>% rename(huc=huc12)
+    write_rds(huc12, file = "data_raw/ca_hucs_h12.rds", compress = "gz")
     print("HUC12 file saved!")
-    return(list("ca"=ca, "h8"=h8, "h12"=h12))
+    return(list("ca"=ca, "huc8"=huc8, "huc12"=huc12))
   } else({
     print("File exists...loading hucs")
-    h8 <- read_rds("data_raw/ca_hucs_h8.rds")
-    h12 <- read_rds("data_raw/ca_hucs_h12.rds")
-    return(list("ca"=ca, "h8"=h8, "h12"=h12))})
+    huc8 <- read_rds("data_raw/ca_hucs_h8.rds")
+    huc12 <- read_rds("data_raw/ca_hucs_h12.rds")
+    return(list("ca"=ca, "huc8"=huc8, "huc12"=huc12))})
 }
 
 # dat<- f_get_hucs()

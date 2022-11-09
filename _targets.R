@@ -45,7 +45,7 @@ list(
   tar_target(download_hucs,
              command = f_get_dm_data(
                area = "HUCStatistics",
-               aoi = c(ca_hucs$h8$huc8),
+               aoi = c(ca_hucs$huc8$huc),
                id_out = "h08")),
 
   # load the local data
