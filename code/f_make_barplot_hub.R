@@ -11,10 +11,12 @@ f_make_barplot_hub <- function(data, st_yr){
     library(colorspace);
     library(shades);
     library(ggplot2);
+    library(dplyr);
     library(ggtext);
     library(systemfonts)
     #library(agg)
   })
+
   fnt <- "Roboto Slab" # try Barlow or Roboto
   fnt2 <- "Roboto Condensed"
 
@@ -51,8 +53,8 @@ f_make_barplot_hub <- function(data, st_yr){
       axis.title = element_text(size = 14, color = "black"),
       axis.text = element_text(family = fnt2, size = 11),
       axis.line.x = element_blank(),
-      axis.line.y = element_line(color = "black", linewidth = .2),
-      axis.ticks.y = element_line(color = "black", linewidth = .2),
+      axis.line.y = element_line(color = "black", size = .2),
+      axis.ticks.y = element_line(color = "black", size = .2),
       axis.ticks.length.y = unit(2, "mm"),
       legend.position = "top",
       legend.title = element_text(color = "#2DAADA", size = 18, face = "bold"),
@@ -65,8 +67,8 @@ f_make_barplot_hub <- function(data, st_yr){
       panel.spacing.x = unit(0.3, "lines"),
       panel.spacing.y = unit(0.25, "lines"),
       panel.background = element_rect(fill = "transparent", color = "transparent"),
-      panel.border = element_rect(color = "transparent", linewidth = 0),
-      plot.background = element_rect(fill = "transparent", color = "transparent", linewidth = .4),
+      panel.border = element_rect(color = "transparent", size = 0),
+      plot.background = element_rect(fill = "transparent", color = "transparent", size = .4),
       plot.margin = margin(rep(18, 4))
     )
 
