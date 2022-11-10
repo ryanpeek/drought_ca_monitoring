@@ -1,6 +1,6 @@
 # make plot
 
-f_make_barplot_hucs <- function(data, huc_level="huc8",huc_id=NULL,
+f_make_barplot_hucs <- function(data, ca_hucs, huc_level="huc8",huc_id=NULL,
                                 huc_name=NULL){
 
   ## Color palette hubs
@@ -15,6 +15,7 @@ f_make_barplot_hucs <- function(data, huc_level="huc8",huc_id=NULL,
     library(sf);
     library(dplyr);
     library(ggtext);
+    library(patchwork);
     library(systemfonts)
   })
   fnt <- "Roboto Slab" # try Barlow or Roboto
@@ -108,8 +109,8 @@ f_make_barplot_hucs <- function(data, huc_level="huc8",huc_id=NULL,
       axis.title = element_text(size = 14, color = "black"),
       axis.text = element_text(family = fnt2, size = 11),
       axis.line.x = element_blank(),
-      axis.line.y = element_line(color = "black", linewidth = .2),
-      axis.ticks.y = element_line(color = "black", linewidth = .2),
+      axis.line.y = element_line(color = "black", size = .2),
+      axis.ticks.y = element_line(color = "black", size = .2),
       axis.ticks.length.y = unit(2, "mm"),
       legend.position = "top",
       legend.title = element_text(color = "#2DAADA", size = 18, face = "bold"),
@@ -122,16 +123,15 @@ f_make_barplot_hucs <- function(data, huc_level="huc8",huc_id=NULL,
       panel.spacing.x = unit(0.3, "lines"),
       panel.spacing.y = unit(0.25, "lines"),
       panel.background = element_rect(fill = "transparent", color = "transparent"),
-      panel.border = element_rect(color = "transparent", linewidth = 0),
-      plot.background = element_rect(fill = "transparent", color = "transparent", linewidth = .4),
+      panel.border = element_rect(color = "transparent", size = 0),
+      plot.background = element_rect(fill = "transparent", color = "transparent", size = .4),
       plot.margin = margin(rep(18, 4))
     )
 
   gsub("-","",Sys.Date())
   ggsave(here::here(glue("figs/drought_bars_{huc_level}_{gsub('-','',Sys.Date())}.pdf")), width = 14.5, height = 11.8, device = cairo_pdf)
 
-  library(patchwork)
-
+  # use patchwork to plot
   gg_final <- bars + gg_huc
 
   ggsave(plot = gg_final, filename = here::here(glue("figs/drought_bars_{huc_level}_w_map_{gsub('-','',Sys.Date())}.pdf")), width = 14.5, height = 11.8, device = cairo_pdf)

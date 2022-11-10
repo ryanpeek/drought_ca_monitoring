@@ -41,6 +41,7 @@ list(
   # get hucs and ca boundary
   tar_target(ca_hucs,
              f_get_hucs()),
+
   # download by hucs of CA
   tar_target(download_hucs,
              command = f_get_dm_data(
@@ -64,6 +65,6 @@ list(
   tar_target(make_plot_hub, f_make_barplot_hub(clean_dat_hub, 2010)),
   tar_target(make_plot_cnty, f_make_barplot_cnty(clean_dat_cnty)),
   # pull info for American
-  tar_target(make_plot_hucs, f_make_barplot_cnty(clean_dat_huc, huc_level="huc8",huc_id=c("18020111", "18020128", "18020129")))
+  tar_target(make_plot_hucs, f_make_barplot_hucs(clean_dat_hucs, ca_hucs, huc_level="huc8",huc_id=c("18020111", "18020128", "18020129")))
 )
 
