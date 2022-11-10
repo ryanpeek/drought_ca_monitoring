@@ -113,8 +113,9 @@ f_make_barplot_hucs <- function(data, ca_hucs, huc_level="huc8",huc_id=NULL,
       axis.ticks.y = element_line(color = "black", size = .2),
       axis.ticks.length.y = unit(2, "mm"),
       legend.position = "top",
-      legend.title = element_text(color = "#2DAADA", size = 18, face = "bold"),
-      legend.text = element_text(color = "#2DAADA", size = 16),
+      legend.justification = c(0.15, 1),
+      legend.title = element_text(color = "#2DAADA", size = 16, face = "bold"),
+      legend.text = element_text(color = "#2DAADA", size = 15),
       strip.text.x = element_text(size = 16, hjust = .5, face = "plain", color = "black", margin = margin(t = 20, b = 5)),
       strip.text.y.left = element_text(size = 18, angle = 0, vjust = .5, face = "plain", color = "black"),
       strip.background = element_rect(fill = "transparent", color = "transparent"),
@@ -132,7 +133,7 @@ f_make_barplot_hucs <- function(data, ca_hucs, huc_level="huc8",huc_id=NULL,
   ggsave(here::here(glue("figs/drought_bars_{huc_level}_{gsub('-','',Sys.Date())}.pdf")), width = 14.5, height = 11.8, device = cairo_pdf)
 
   # use patchwork to plot
-  gg_final <- bars + gg_huc
+  gg_final <- bars + gg_huc + plot_layout(guides = 'auto')
 
   ggsave(plot = gg_final, filename = here::here(glue("figs/drought_bars_{huc_level}_w_map_{gsub('-','',Sys.Date())}.pdf")), width = 14.5, height = 11.8, device = cairo_pdf)
   ggsave(plot = gg_final, filename = here::here(glue("figs/drought_bars_{huc_level}_w_map_{gsub('-','',Sys.Date())}.png")), width = 14.5, height = 11.8, bg="white")
