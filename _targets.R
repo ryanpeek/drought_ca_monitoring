@@ -62,7 +62,8 @@ list(
 
   # make plot
   tar_target(make_plot_hub, f_make_barplot_hub(clean_dat_hub, 2010)),
-  tar_target(make_plot_cnty, f_make_barplot_cnty(clean_dat_cnty))
-  #tar_target(make_plot_hucs, f_make_barplot_cnty(clean_dat_huc, "Gualala-Salmon"))
+  tar_target(make_plot_cnty, f_make_barplot_cnty(clean_dat_cnty)),
+  # pull info for American
+  tar_target(make_plot_hucs, f_make_barplot_cnty(clean_dat_huc, huc_level="huc8",huc_id=c("18020111", "18020128", "18020129")))
 )
 
