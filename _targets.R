@@ -6,7 +6,7 @@
 # Libraries & Setup -------------------------------------------------------
 
 library(targets)
-#library(tarchetypes)
+library(tarchetypes)
 
 tar_option_set(packages = "tidyverse")
 suppressPackageStartupMessages(library(tidyverse, quietly = TRUE))
@@ -20,12 +20,16 @@ list(
   # rule to download USDA Climate Hubs:
   ## California = 1, Caribbean = 2, Midwest = 3, Northeast = 4, Northern Forests = 5, Northern Plains = 6, Northwest = 7, Southeast  = 8, Southern Plains = 9, Southwest = 10
   tar_target(download_hub,
-             command = f_get_dm_data(aoi = c(1,7,10))),
+             command = f_get_dm_data(aoi = c(1,7,10)),
+             cue = tar_cue_age(name = download_hub,
+                               age = as.difftime(1, units = "days"))),
   tar_target(download_hub_dsci,
              command = f_get_dm_data(
                aoi = c(1,7,10),
                stats_type="GetDSCI",
-               id_out = "dsci_west")),
+               id_out = "dsci_west"),
+             cue = tar_cue_age(name = download_hub_dsci,
+                               age = as.difftime(1, units = "days"))),
 
   # rule to download counties
   tar_target(cnty_fips, f_get_counties() %>%
@@ -36,7 +40,9 @@ list(
              command = f_get_dm_data(
                area = "CountyStatistics",
                aoi = c(cnty_fips$ca_cnty_fips),
-               id_out = "cnty")),
+               id_out = "cnty"),
+             cue = tar_cue_age(name = download_cnty,
+                               age = as.difftime(1, units = "days"))),
 
   # get hucs and ca boundary
   tar_target(ca_hucs,
@@ -47,7 +53,9 @@ list(
              command = f_get_dm_data(
                area = "HUCStatistics",
                aoi = c(ca_hucs$huc8$huc),
-               id_out = "h08")),
+               id_out = "h08"),
+             cue = tar_cue_age(name = download_hucs,
+                               age = as.difftime(1, units = "days"))),
 
   # load the local data
   tar_target(read_hub, f_load_local(download_hub)),
