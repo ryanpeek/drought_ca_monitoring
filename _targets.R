@@ -54,7 +54,9 @@ list(
              command = f_get_dm_data(
                area = "HUCStatistics",
                aoi = c(ca_hucs$huc8$huc),
-               id_out = "h08")),
+               id_out = "h08"),
+             cue = tar_cue_age(name = download_hucs,
+                               age = as.difftime(1, units = "days"))),
 
   # load the local data
   tar_target(read_hub, f_load_local(download_hub)),

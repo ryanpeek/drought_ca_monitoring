@@ -136,7 +136,7 @@ f_make_barplot_hucs <- function(data, ca_hucs, huc_level="huc8",huc_id=NULL,
   gg_final <- bars + gg_huc + plot_layout(guides = 'auto')
 
   ggsave(plot = gg_final, filename = here::here(glue("figs/drought_bars_{huc_level}_w_map_{gsub('-','',Sys.Date())}.pdf")), width = 14.5, height = 11.8, device = cairo_pdf)
-  ggsave(plot = gg_final, filename = here::here(glue("figs/drought_bars_{huc_level}_w_map_{gsub('-','',Sys.Date())}.png")), width = 14.5, height = 11.8, bg="white")
+  #ggsave(plot = gg_final, filename = here::here(glue("figs/drought_bars_{huc_level}_w_map_{gsub('-','',Sys.Date())}.png")), width = 14.5, height = 11.8, bg="white")
 
 
 }
