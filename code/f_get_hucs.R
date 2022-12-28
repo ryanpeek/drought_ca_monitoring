@@ -18,11 +18,11 @@ f_get_hucs <- function(){
     print("loading ca boundary")
     ca <- read_rds("data_raw/ca_state_boundary.rds")})
   if(!file.exists("data_raw/ca_hucs_h8.rds")){
-    huc8 <- nhdplusTools::get_huc8(AOI = ca)
+    huc8 <- nhdplusTools::get_huc(AOI = ca, type = "huc08")
     huc8 <- huc8 %>% rename(huc=huc8)
     write_rds(huc8, file = "data_raw/ca_hucs_h8.rds", compress = "gz")
     print("HUC8 file saved!")
-    huc12 <- nhdplusTools::get_huc12(AOI = ca)
+    huc12 <- nhdplusTools::get_huc(AOI = ca, type = "huc12")
     huc12 <- huc12 %>% rename(huc=huc12)
     write_rds(huc12, file = "data_raw/ca_hucs_h12.rds", compress = "gz")
     print("HUC12 file saved!")
