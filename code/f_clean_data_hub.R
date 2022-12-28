@@ -24,7 +24,7 @@ f_clean_data_hub <- function(data){
   dm_perc_cat_hub <-
     data %>%
     # filter to just Northwest, CA and Southwest
-    filter(Name %in% c("California", "Northwest", "Southwest")) %>%
+    dplyr::filter(Name %in% c("California", "Northwest", "Southwest")) %>%
     mutate(
       across(c(MapDate, ValidStart, ValidEnd), as_date),
       across(None:D4, ~as.numeric(.x) / 100),
@@ -37,7 +37,7 @@ f_clean_data_hub <- function(data){
       names_to = "category",
       values_to = "percentage"
     ) %>%
-    filter(category != "None") %>%
+    dplyr::filter(category != "None") %>%
     mutate(category = factor(category)) %>%
     dplyr::select(-ValidStart, -ValidEnd, -StatisticFormatID) %>%
     mutate(
@@ -51,7 +51,7 @@ f_clean_data_hub <- function(data){
     group_by(wyear) %>%
     mutate(max_week = max(wyweek)) %>% ## for var
     ungroup() %>%
-    filter(percentage > 0)
+    dplyr::filter(percentage > 0)
 
   return(dm_perc_cat_hub)
 }
