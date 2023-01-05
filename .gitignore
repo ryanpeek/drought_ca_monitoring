@@ -45,8 +45,8 @@ docs/*html
 
 # specific data
 data_raw/*json
-data_raw/ca_hucs_h12.rds
 data_raw/ca_hucs_h8.rds
+data_raw/ca_hucs_h12.rds
 data_out/healthy_watershed_2013*
 
 sndbox/*
