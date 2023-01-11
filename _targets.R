@@ -59,10 +59,18 @@ list(
                                age = as.difftime(1, units = "days"))),
 
   # load the local data
-  tar_target(read_hub, f_load_local(download_hub)),
-  tar_target(read_hub_dsci, f_load_local(download_hub_dsci)),
-  tar_target(read_cnty, f_load_local(download_cnty)),
-  tar_target(read_hucs, f_load_local(download_hucdat)),
+  tar_target(read_hub, f_load_local(download_hub),
+             cue = tar_cue_age(name = download_hub,
+                               age = as.difftime(1, units = "days"))),
+  tar_target(read_hub_dsci, f_load_local(download_hub_dsci),
+             cue = tar_cue_age(name = download_hub_dsci,
+                               age = as.difftime(1, units = "days"))),
+  tar_target(read_cnty, f_load_local(download_cnty),
+             cue = tar_cue_age(name = download_cnty,
+                               age = as.difftime(1, units = "days"))),
+  tar_target(read_hucs, f_load_local(download_hucdat),
+             cue = tar_cue_age(name = download_hucdat,
+                               age = as.difftime(1, units = "days"))),
 
   # clean data
   tar_target(clean_dat_hub, f_clean_data_hub(read_hub)),
