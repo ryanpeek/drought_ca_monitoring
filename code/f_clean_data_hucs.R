@@ -1,4 +1,4 @@
-# clean data by county
+# clean data by huc
 
 f_clean_data_hucs <- function(data){
 
