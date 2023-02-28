@@ -136,11 +136,16 @@ f_make_barplot_hucs <- function(data, ca_hucs, huc_level="huc8",huc_id=NULL,
   gsub("-","",Sys.Date())
   ggsave(here::here(glue("figs/drought_bars_{huc_level}_{gsub('-','',Sys.Date())}.pdf")), width = 14.5, height = 11.8, device = cairo_pdf)
 
+  ggsave(here::here(glue("figs/drought_bars_{huc_level}_current.png")), width = 14.5, height = 11.8, bg="white")
+
   # use patchwork to plot
   gg_final <- bars + gg_huc + plot_layout(guides = 'auto')
 
+  # pdf
   ggsave(plot = gg_final, filename = here::here(glue("figs/drought_bars_{huc_level}_w_map_{gsub('-','',Sys.Date())}.pdf")), width = 14.5, height = 11.8, device = cairo_pdf)
-  #ggsave(plot = gg_final, filename = here::here(glue("figs/drought_bars_{huc_level}_w_map_{gsub('-','',Sys.Date())}.png")), width = 14.5, height = 11.8, bg="white")
+
+  # make a png "current" version
+  ggsave(plot = gg_final, filename = here::here(glue("figs/drought_bars_{huc_level}_w_map_current.png")), width = 14.5, height = 11.8, bg="white")
 
 
 }

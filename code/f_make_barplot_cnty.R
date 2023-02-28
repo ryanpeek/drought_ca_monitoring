@@ -72,6 +72,8 @@ f_make_barplot_cnty <- function(data, cntys=c("Yolo", "Stanislaus", "Tulare", "K
 
   gsub("-","",Sys.Date())
   ggsave(here::here(glue("figs/drought_bars_cnty_{gsub('-','',Sys.Date())}.pdf")), width = 14.5, height = 11.8, device = cairo_pdf)
-  #ggsave(here::here(glue("figs/drought_bars_cnty_{gsub('-','',Sys.Date())}.png")), width = 14.5, height = 11.8, bg="white")
+
+  # make png current
+  ggsave(here::here(glue("figs/drought_bars_cnty_current.png")), width = 14.5, height = 11.8, bg="white")
 
 }
