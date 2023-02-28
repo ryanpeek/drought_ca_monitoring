@@ -51,7 +51,7 @@ list(
 
   # download by hucs of CA
   tar_target(download_hucdat,
-             command = f_get_dm_data(
+             command = f_get_dm_hucs_data(
                area = "HUCStatistics",
                aoi = c(ca_hucs$huc8$huc),
                id_out = "h08"),

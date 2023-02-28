@@ -59,10 +59,11 @@ f_make_barplot_hucs <- function(data, ca_hucs, huc_level="huc8",huc_id=NULL,
   # join data
   dat_sf <- huc_out %>%
     select(huc, name, geometry) %>%
-    left_join(data)
+    left_join(data, multiple="all")
 
   # trim data
   dat_filt <- data %>% filter(huc %in% huc_id)
+  dat_filt %>% distinct(.keep_all = TRUE) -> dat_filt
 
   # get plot of huc shapes
   gg_huc <- ggplot() +
