@@ -6,7 +6,9 @@ A `{targets}` based project to pull data from the [US Drought Monitor](https://d
 
 These data can be visualized by CA county, HUC8, and Climate Hub, with additional adaptions planned focusing on using the [Drought Severity & Coverage Index](https://droughtmonitor.unl.edu/DmData/DataDownload/DSCI.aspx) (DSCI) metric in conjunction with a metric of evaporative demand.
 
-![](figs/drought_bars_huc8_w_map_20221109.png)
+![](figs/drought_bars_huc8_w_map_20230228.pdf)
+
+![](figs/drought_bars_hub_20230228.pdf)
 
 ## To Run
 
