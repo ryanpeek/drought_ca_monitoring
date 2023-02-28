@@ -67,7 +67,7 @@ f_make_barplot_hucs <- function(data, ca_hucs, huc_level="huc8",huc_id=NULL,
 
   # get plot of huc shapes
   gg_huc <- ggplot() +
-    geom_sf(data=ca_hucs$ca, col="gray30", fill=NA, lwd=4) +
+    geom_sf(data=ca_hucs$ca, col="gray30", fill=NA, linewidth=1.2) +
     geom_sf(data=huc_out, col="orange4", fill="gray60", lwd=0.2, alpha=0.7) +
     labs(caption = glue("NHD: {huc_level}"))+
     ggrepel::geom_text_repel(data=huc_out, family = fnt,
@@ -96,7 +96,8 @@ f_make_barplot_hucs <- function(data, ca_hucs, huc_level="huc8",huc_id=NULL,
     ) +
     facet_grid(rows = vars(wyear), cols = vars(huc), switch = "y") +
     coord_cartesian(clip = "off") +
-    scale_x_continuous(expand = c(.02, .02), guide = "none", name = NULL) +
+    #scale_x_continuous(expand = c(.02, .02), guide = "none", name = NULL) +
+    scale_x_continuous(expand = c(.02, .02), breaks=c(1, 14, 27, 40), labels= c("Oct","Jan","Apr","Jul"), name = NULL) +  #guide = "none")+
     scale_y_continuous(expand = c(0, 0), position = "right", labels = NULL, name = NULL) +
     scale_fill_viridis_d(
       option = "rocket", name = "Category:",
@@ -109,7 +110,9 @@ f_make_barplot_hucs <- function(data, ca_hucs, huc_level="huc8",huc_id=NULL,
     theme(
       axis.title = element_text(size = 14, color = "black"),
       axis.text = element_text(family = fnt2, size = 11),
-      axis.line.x = element_blank(),
+      #axis.line.x = element_blank(),
+      axis.line.x = element_line(color = "black", linewidth = .1),
+      axis.ticks.x = element_line(color = "black", linewidth = .1),
       axis.line.y = element_line(color = "black", linewidth = .2),
       axis.ticks.y = element_line(color = "black", linewidth = .2),
       axis.ticks.length.y = unit(2, "mm"),

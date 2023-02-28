@@ -1,6 +1,6 @@
 # make plot
 
-f_make_barplot_cnty <- function(data){
+f_make_barplot_cnty <- function(data, cntys=c("Yolo", "Stanislaus", "Tulare", "Kern")){
 
   ## Color palette hubs
   #greys <- c(0, 60, 40, 60, 0, 40, 60, 0)
@@ -8,6 +8,7 @@ f_make_barplot_cnty <- function(data){
   suppressPackageStartupMessages({
     library(colorspace);
     library(shades);
+    library(dplyr);
     library(ggplot2);
     library(ggtext);
     library(systemfonts)
@@ -15,8 +16,10 @@ f_make_barplot_cnty <- function(data){
   fnt <- "Roboto Slab" # try Barlow or Roboto
   fnt2 <- "Roboto Condensed"
 
+  data <- data %>% filter(cnty %in% cntys)
+
   #plot
-  bars <-
+  ggbars <-
     ggplot(data, aes(wyweek, percentage)) +
     geom_rect(aes(
       xmin = .5, xmax = max_week + .5,
@@ -31,7 +34,7 @@ f_make_barplot_cnty <- function(data){
     ) +
     facet_grid(rows = vars(wyear), cols = vars(cnty), switch = "y") +
     coord_cartesian(clip = "off") +
-    scale_x_continuous(expand = c(.02, .02), guide = "none", name = NULL) +
+    scale_x_continuous(expand = c(.02, .02), breaks=c(1, 14, 27, 40), labels= c("Oct","Jan","Apr","Jul"), name = NULL) +  #guide = "none")+
     scale_y_continuous(expand = c(0, 0), position = "right", labels = NULL, name = NULL) +
     scale_fill_viridis_d(
       option = "rocket", name = "Category:",
@@ -44,7 +47,10 @@ f_make_barplot_cnty <- function(data){
     theme(
       axis.title = element_text(size = 14, color = "black"),
       axis.text = element_text(family = fnt2, size = 11),
-      axis.line.x = element_blank(),
+      #axis.line.x = element_blank(),
+      axis.line.x = element_line(color = "black", linewidth = .1),
+      axis.ticks.x = element_line(color = "black", linewidth = .1),
+      #axis.ticks.length.x = unit(2, "mm"),
       axis.line.y = element_line(color = "black", linewidth = .2),
       axis.ticks.y = element_line(color = "black", linewidth = .2),
       axis.ticks.length.y = unit(2, "mm"),

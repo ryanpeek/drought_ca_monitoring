@@ -39,7 +39,7 @@ f_make_barplot_hub <- function(data, st_yr){
     ) +
     facet_grid(rows = vars(wyear), cols = vars(hub), switch = "y") +
     coord_cartesian(clip = "off") +
-    scale_x_continuous(expand = c(.02, .02), guide = "none", name = NULL) +
+    scale_x_continuous(expand = c(.02, .02), breaks=c(1, 14, 27, 40), labels= c("Oct","Jan","Apr","Jul"), name = NULL) +  #guide = "none")+
     scale_y_continuous(expand = c(0, 0), position = "right", labels = NULL, name = NULL) +
     scale_fill_viridis_d(
       option = "rocket", name = "Category:",
@@ -52,7 +52,9 @@ f_make_barplot_hub <- function(data, st_yr){
     theme(
       axis.title = element_text(size = 14, color = "black"),
       axis.text = element_text(family = fnt2, size = 11),
-      axis.line.x = element_blank(),
+      #axis.line.x = element_blank(),
+      axis.line.x = element_line(color = "black", linewidth = .1),
+      axis.ticks.x = element_line(color = "black", linewidth = .1),
       axis.line.y = element_line(color = "black", linewidth = .2),
       axis.ticks.y = element_line(color = "black", linewidth = .2),
       axis.ticks.length.y = unit(2, "mm"),

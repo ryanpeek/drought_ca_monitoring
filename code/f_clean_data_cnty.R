@@ -33,7 +33,7 @@ f_clean_data_cnty <- function(data){
       wyday = add_wyd(date),
       week = week(date),
       wyweek = add_wyweek(wyday),
-      cnty = as.factor(cnty)
+      cnty = as.factor(gsub(replacement = "", " County", cnty))
     ) %>%
     group_by(year) %>%
     mutate(max_week = max(wyweek)) %>% ## for var

@@ -32,6 +32,15 @@ list(
              cue = tar_cue_age(name = download_hub_dsci,
                                age = as.difftime(1, units = "days"))),
 
+  # download counties
+  tar_target(cnty_fips, f_get_counties()),
+
+  # download counties selected
+  #tar_target(cnty_fips, f_get_counties() %>%
+  #             filter(county %in%
+  #                      c("Yolo", "Stanislaus", "Tulare", "Kern"))),
+
+
   # download county data
   tar_target(download_cnty,
              command = f_get_dm_data(
@@ -41,10 +50,7 @@ list(
              cue = tar_cue_age(name = download_cnty,
                                age = as.difftime(1, units = "days"))),
 
-  # download counties
-  tar_target(cnty_fips, f_get_counties() %>%
-               filter(county %in%
-                        c("Yolo", "Stanislaus", "Tulare", "Kern"))),
+
   # get hucs and ca boundary
   tar_target(ca_hucs,
              f_get_hucs()),
