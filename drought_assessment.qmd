@@ -1,0 +1,84 @@
+---
+title: "California Drought Assessment"
+date: "`r Sys.Date()`"
+params: 
+  scale: "county"
+format: 
+  html:
+    toc: true
+    toc-depth: 2
+    toc-location: left
+    toc-title: Contents
+    code-overflow: wrap
+    code-fold: true
+    code-tools: true
+    code-block-bg: true
+    code-block-border-left: "#31BAE9"
+    theme: journal #litera #default
+    highlight-style: arrow
+    embed-resources: true
+editor_options: 
+  chunk_output_type: console
+---
+
+## Background
+
+This document provides information on current drought conditions in California using Drought Monitor data. Comprehensive statistics and data for the entire US can be downloaded [here](https://droughtmonitor.unl.edu/DmData/DataDownload/ComprehensiveStatistics.aspx).
+
+Credit to original visualizations by [Cédric Scherer](https://cedricscherer.com) and [Georgios Karamanis](https://karaman.is) (code [here](https://github.com/gkaramanis/drought_viz_sciam-shared)).
+
+<aside>
+[Data downloads via the API are here](https://droughtmonitor.unl.edu/DmData/DataDownload/WebServiceInfo.aspx#comp)
+</aside>
+
+
+```{r setup}
+#| echo: false
+#| hide: true
+#| warning: false
+#| message: false
+#| results: false
+
+library(here)
+source(here("code/f_get_fonts.R"))
+
+# set fonts depending on system:
+font1 <- if(get_os()=="windows"){
+  "Century Gothic"
+} else {
+  "Atkinson Hyperlegible"
+}
+font2 <- "Roboto Condensed"
+
+# load fonts
+f_get_fonts(font1, font2)
+
+
+dfw_cols <- c("#292F6D", "#1E718F", "#9DC63B", "#3B7B3B", "#194A27",
+              "#131448", "#335FAC", "#472E1D", "#954922", "#A57630" )
+
+dfw_accents <- c("#E6E7E8", "#D1D3D4", "#939598", "#808285", "#58595B",
+                 "#414042", "#282829", "#551543", "#D77328", "#045070",
+                 "#0A1E25")
+
+
+# now load libraries
+library(tidyverse)
+library(lubridate)
+library(glue)
+library(sf)
+library(mapview)
+mapviewOptions(fgb=FALSE)
+
+date_retrieved <- "20230207"
+
+
+```
+
+```{r cawide}
+#| echo: false
+#| warning: false
+#| message: false
+
+```
+

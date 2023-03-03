@@ -34,7 +34,7 @@ f_get_dm_hucs_data <- function(area="HUCStatistics",
   }
 
   # GET Recent data
-  dm_curr_file <- glue("data_raw/dm_{area}_{id_out}_current.json")
+  dm_curr_file <- glue("data_raw/dm_{area}_{id_out}_current.json.zip")
   if(file.exists(dm_curr_file)){
     dm_curr <- import(dm_curr_file)
     # get latest record date:
