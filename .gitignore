@@ -48,4 +48,4 @@ data_raw/*json
 data_raw/ca_hucs_h8.rds
 data_raw/ca_hucs_h12.rds
 
-sndbox/*
+/_sandbox/
