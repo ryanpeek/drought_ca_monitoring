@@ -81,7 +81,7 @@ f_get_dm_hucs_data <- function(area="HUCStatistics",
 
   # filter to anything newer than last date
   if(!is.null(last_record)){
-    dm_df_flt <- filter(dm_df_tmp, as_date(dm_df_tmp$MapDate) > last_record)
+    dm_df_flt <- dplyr::filter(dm_df_tmp, as_date(dm_df_tmp$MapDate) > last_record)
     dm_df <- bind_rows(dm_curr, dm_df_tmp) %>%
       distinct(.keep_all = TRUE)
     # drop duplicates

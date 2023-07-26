@@ -45,8 +45,24 @@ f_get_dm_data <- function(area="ClimateHubStatistics",
   # hucs: HUC ID number (for 2, 4, 6 and 8 digit) (i.e. NFA=18020128)
   aoi_str <- glue_collapse(aoi, ",")
 
+  # GET Recent data
+  dm_curr_file <- glue("data_raw/dm_{area}_{id_out}_current.json.zip")
+  if(file.exists(dm_curr_file)){
+    dm_curr <- import(dm_curr_file)
+    # get latest record date:
+    last_record <- max(as_date(dm_curr$MapDate))
+  } else({
+    last_record <- NULL
+  })
+
   # START/END Dates: formatted: M/D/YYYY
   start_date <- "10/1/1999" # same time frame for all
+  # get records from last recorded year to minimize download time
+  if(is.null(last_record)){
+    start_date <- "10/1/1999"
+  } else({
+    start_date <- as.character(glue("10/1/{year(last_record)-1}"))
+  })
   if(is.null(end_date)){
     end_date <- format(Sys.Date(), format="%m/%d/%Y") # get curr date
     }
