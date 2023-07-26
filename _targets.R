@@ -56,13 +56,13 @@ list(
              f_get_hucs()),
 
   # download by hucs of CA
-  # tar_target(download_hucdat,
-  #            command = f_get_dm_hucs_data(
-  #              area = "HUCStatistics",
-  #              aoi = c(ca_hucs$huc8$huc),
-  #              id_out = "h08"),
-  #            cue = tar_cue_age(name = download_hucdat,
-  #                              age = as.difftime(1, units = "days"))),
+  #tar_target(download_hucdat,
+  #           command = f_get_dm_hucs_data(
+   #            area = "HUCStatistics",
+  #             aoi = c(ca_hucs$huc8$huc),
+   #            id_out = "h08"),
+  #           cue = tar_cue_age(name = download_hucdat,
+   #                            age = as.difftime(1, units = "days"))),
 
   # load the local data
   tar_target(read_hub, f_load_local(download_hub),
@@ -91,9 +91,12 @@ list(
   tar_target(make_plot_cnty, f_make_barplot_cnty(clean_dat_cnty),
              cue = tar_cue_age(name = download_cnty,
                                age = as.difftime(1, units = "days")))
+  )
   # pull info for American
-  # tar_target(make_plot_hucs, f_make_barplot_hucs(clean_dat_hucs, ca_hucs, huc_level="huc8",huc_id=c("18020111", "18020128", "18020129")),
-  #            cue = tar_cue_age(name = download_hucdat,
-  #                              age = as.difftime(1, units = "days")))
-)
+#   tar_target(make_plot_hucs, f_make_barplot_hucs(clean_dat_hucs, ca_hucs,
+#                                                  huc_level="huc8",
+#                                                  huc_id=c("18020111", "18020128", "18020129")),
+#              cue = tar_cue_age(name = download_hucdat,
+#                                age = as.difftime(1, units = "days")))
+# )
 
