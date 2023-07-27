@@ -19,8 +19,15 @@ library(lubridate)
 
 f_get_dm_hucs_data <- function(area="HUCStatistics",
                           stats_type="GetDroughtSeverityStatisticsByAreaPercent",
-                          aoi=c("18020111", "18020128", "18020129"), statid=2, end_date=NULL, id_out="h08"){
+                          huc_level="8",
+                          aoi="18",
+                          #aoi=c("18020111", "18020128", "18020129"),
+                          statid=2,
+                          end_date=NULL,
+                          id_out="h08"){
 
+  # huc_level and it takes 2, 4, 6 or 8,
+  # allows downloading all data at a given level for HUCs within the X digit HUC specified in the aoi
   # check parameters
   if(!area %in% c("StateStatistics", "CountyStatistics",
                   "HUCStatistics", "ClimateHubStatistics")){
@@ -69,7 +76,7 @@ f_get_dm_hucs_data <- function(area="HUCStatistics",
 
   # set path
   # but in batches to make download more reasonable (no more than 5 hucs at a time?)
-  dm_path <- glue("https://usdmdataservices.unl.edu/api/{area}/{stats_type}?aoi={aoi_str}&startdate={start_date}&enddate={end_date}&statisticsType={statid}")
+  dm_path <- glue("https://usdmdataservices.unl.edu/api/{area}/{stats_type}?aoi={aoi_str}&hucLevel={huc_level}&startdate={start_date}&enddate={end_date}&statisticsType={statid}")
 
   # Get info
   dm_get <- GET(url=dm_path)
@@ -85,8 +92,9 @@ f_get_dm_hucs_data <- function(area="HUCStatistics",
     dm_df <- bind_rows(dm_curr, dm_df_tmp) %>%
       distinct(.keep_all = TRUE)
     # drop duplicates
-  }
-
+  } else ({
+    dm_df <- dm_df_tmp
+  })
   # write out general to json
   rio::export(dm_df, file=glue("data_raw/dm_{area}_{id_out}_current.json.zip"))
 
