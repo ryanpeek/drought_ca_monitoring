@@ -13,6 +13,7 @@ library(dplyr)
 library(rio)
 library(httr)
 library(xml2)
+library(lubridate)
 #library(purrr)
 #library(tigris)
 
@@ -56,16 +57,17 @@ f_get_dm_data <- function(area="ClimateHubStatistics",
   })
 
   # START/END Dates: formatted: M/D/YYYY
-  start_date <- "10/1/1999" # same time frame for all
+  if(is.null(end_date)){
+    end_date <- format(Sys.Date(), format="%m/%d/%Y") # get curr date
+  }
+
+  # start_date <- "10/1/1999" # same time frame for all
   # get records from last recorded year to minimize download time
   if(is.null(last_record)){
     start_date <- "10/1/1999"
   } else({
     start_date <- as.character(glue("10/1/{year(last_record)-1}"))
   })
-  if(is.null(end_date)){
-    end_date <- format(Sys.Date(), format="%m/%d/%Y") # get curr date
-    }
 
   # 1 for traditional or 2 for categorical.
   if(!statid %in% c(1, 2)){
@@ -87,6 +89,11 @@ f_get_dm_data <- function(area="ClimateHubStatistics",
   dm_df <- jsonlite::fromJSON(content(dm_get, "text"))
 
   print("Data downloaded!")
+
+  # join data
+  if(!is.null(last_record)){
+    dm_df <- full_join(dm_df, dm_curr)
+  }
 
   # write out general to json
   rio::export(dm_df, file=glue("data_raw/dm_{area}_{id_out}_current.json.zip"))

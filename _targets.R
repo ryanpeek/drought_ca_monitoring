@@ -13,7 +13,7 @@ suppressPackageStartupMessages(library(tidyverse, quietly = TRUE))
 options(tidyverse.quiet=TRUE)
 
 # source code
-tar_source("code/")
+tar_source("R/")
 
 # list the steps
 list(
