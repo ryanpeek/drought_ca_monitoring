@@ -11,12 +11,13 @@ f_make_barplot_cnty <- function(data, cntys=c("Yolo", "Stanislaus", "Tulare", "K
     library(dplyr);
     library(ggplot2);
     library(ggtext);
+    library(glue);
     library(systemfonts)
   })
   fnt <- "Roboto Slab" # try Barlow or Roboto
   fnt2 <- "Roboto Condensed"
 
-  data <- data %>% filter(cnty %in% cntys)
+  data <- data  |>  dplyr::filter(cnty %in% cntys)
 
   #plot
   ggbars <-
@@ -43,8 +44,10 @@ f_make_barplot_cnty <- function(data, cntys=c("Yolo", "Stanislaus", "Tulare", "K
                  "Extreme Drought", "Exceptional Drought")
     ) +
     guides(fill = guide_legend(override.aes = list(size = 1))) +
+    labs(caption = glue("Data from US Drought Monitor, updated {format(Sys.Date(), format='%Y-%m-%d')}")) +
     theme_light(base_size = 18, base_family = fnt) +
     theme(
+      plot.caption = element_text(size=10),
       axis.title = element_text(size = 14, color = "black"),
       axis.text = element_text(family = fnt2, size = 11),
       #axis.line.x = element_blank(),

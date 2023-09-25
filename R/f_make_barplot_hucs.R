@@ -106,8 +106,10 @@ f_make_barplot_hucs <- function(data, ca_hucs, huc_level="huc8",huc_id=NULL,
                  "Extreme Drought", "Exceptional Drought")
     ) +
     guides(fill = guide_legend(override.aes = list(size = 1))) +
+    labs(caption = glue("Data from US Drought Monitor, updated {format(Sys.Date(), format='%Y-%m-%d')}")) +
     theme_light(base_size = 18, base_family = fnt) +
     theme(
+      plot.caption = element_text(size=10),
       axis.title = element_text(size = 14, color = "black"),
       axis.text = element_text(family = fnt2, size = 11),
       #axis.line.x = element_blank(),
